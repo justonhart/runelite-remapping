@@ -27,7 +27,10 @@ const REL_HWHEEL: u16 = 0x06;
 
 const BTN_SIDE: u16 = 0x113;
 const BTN_EXTRA: u16 = 0x114;
+const BTN_10: u16 = 282;
 const KEY_ESC: u16 = 1;
+const KEY_BACKSPACE: u16 = 14;
+const KEY_SPACE: u16 = 57;
 const KEY_LEFTSHIFT: u16 = 42;
 const KEY_1: u16 = 2;
 const KEY_2: u16 = 3;
@@ -182,15 +185,16 @@ fn main() -> io::Result<()> {
                         event.code = KEY_ESC;
                     }
                     BTN_EXTRA => {
+                        event.code = KEY_SPACE;
+                    }
+                    BTN_10 => {
                         event.code = KEY_LEFTSHIFT;
                     }
                     _ => {}
                 }
             } else if event.type_ == EV_REL && event.code == REL_HWHEEL {
-                if event.value > 0 {
-                    emitter.emit_key_press(KEY_1)?;
-                } else {
-                    emitter.emit_key_press(KEY_2)?;
+                if event.value < 0 {
+                    emitter.emit_key_press(KEY_BACKSPACE)?;
                 }
                 continue;
             }
