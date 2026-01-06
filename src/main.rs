@@ -32,8 +32,6 @@ const KEY_ESC: u16 = 1;
 const KEY_BACKSPACE: u16 = 14;
 const KEY_SPACE: u16 = 57;
 const KEY_LEFTSHIFT: u16 = 42;
-const KEY_1: u16 = 2;
-const KEY_2: u16 = 3;
 const KEY_F5: u16 = 63;
 
 struct FocusChecker {
@@ -71,7 +69,12 @@ impl FocusChecker {
         }
         
         self.last_check = now;
-        
+
+        // If we didn't find a sway socket at startup, try again now
+        if self.sway_socket.is_none() {
+            self.sway_socket = Self::find_sway_socket();
+        }
+
         let socket = match &self.sway_socket {
             Some(s) => s,
             None => {
