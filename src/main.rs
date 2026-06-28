@@ -33,6 +33,7 @@ const KEY_BACKSPACE: u16 = 14;
 const KEY_SPACE: u16 = 57;
 const KEY_LEFTSHIFT: u16 = 42;
 const KEY_F5: u16 = 63;
+const KEY_F6: u16 = 64;
 
 struct FocusChecker {
     last_check: Instant,
@@ -198,7 +199,7 @@ fn main() -> io::Result<()> {
                 }
             } else if event.type_ == EV_REL && event.code == REL_HWHEEL {
                 if event.value < 0 {
-                    emitter.emit_key_press(KEY_BACKSPACE)?;
+                    emitter.emit_key_press(KEY_F6)?;
                 } else {
                     emitter.emit_key_press(KEY_F5)?;
                 }
